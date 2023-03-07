@@ -31,6 +31,7 @@ function ExpenseForm() {
 		// });
 
 		// proper way to set states when you are depending on a previous state
+		// must use an arrow function that receives the previous state and returns the new one
 
 		// setUserInput((prevState) => {
 		// 	return {...prevState, userTitle: event.target.value};
@@ -45,24 +46,34 @@ function ExpenseForm() {
 		setUserDate(event.target.value);
 	};
 
+	const submitHandler = (event) => {
+		// this stops the page from sending a request and reloading when the form submit button is pressed
+		event.preventDefault();
+		const expenseDate = {
+			title: userTitle,
+			amouunt: userAmount,
+			date: new Date(userDate)
+		};
+
+		setUserTitle('');
+		setUserAmount('');
+		setUserDate('');
+	};
+
 	return (
-		<form>
+		<form onSubmit={submitHandler}>
 			<div className='new-expense__controls'>
 				<div className='new-expense__control'>
 					<label>Title</label>
-					<input type='text' onChange={titleChangeHandler} />
+					<input type='text' value={userTitle} onChange={titleChangeHandler} />
 				</div>
-			</div>
-			<div className='new-expense__controls'>
 				<div className='new-expense__control'>
 					<label>Amount</label>
-					<input type='number' min='0.01' step='0.01' onChange={amountChangeHandler} />
+					<input type='number' min='0.01' value={userAmount} step='0.01' onChange={amountChangeHandler} />
 				</div>
-			</div>
-			<div className='new-expense__controls'>
 				<div className='new-expense__control'>
 					<label>Date</label>
-					<input type='date' min='2019-01-01' step='2022-12-31' onClick={dateChangeHandler} />
+					<input type='date' min='2019-01-01' value={userDate} max='2023-12-31' onChange={dateChangeHandler} />
 				</div>
 			</div>
 			<div className="new-expense__actions">
