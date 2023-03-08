@@ -9,16 +9,20 @@ function Expenses(props) {
 
   const filterSelectHandler = (filteredYear) => {
     setYear(filteredYear);
-    console.log(filteredYear);
+    props.onFilterChange(filteredYear);
   };
   
+  const filteredExpenses = props.expenses.filter(expense => expense.date.getFullYear().toString() === year);
+
 	return(
     <Card className="expenses">
       <ExpensesFilter selected={year} onFilterSelect={filterSelectHandler}/>
 
       {/* dynamically rendering a list of data using map */}
-      {props.expenses.map((expense) => (
+      {filteredExpenses.map((expense) => (
       <ExpenseItem 
+        // key is a necesary unique id for react to render dynamic lists efficiently
+        key={expense.id}
         title={expense.title}
         amount={expense.amount}
         date={expense.date}
