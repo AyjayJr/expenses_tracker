@@ -13,23 +13,23 @@ function Expenses(props) {
 
   const filteredExpenses = props.expenses.filter(expense => expense.date.getFullYear().toString() === year);
 
+  let expensesContent = <p>No expenses found.</p>
+
+  if (filteredExpenses.length > 0) {
+    expensesContent = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ))
+  }
+
   return (
     <Card className="expenses">
       <ExpensesFilter selected={year} onFilterSelect={filterSelectHandler} />
-
-      {filteredExpenses.length === 0 ? <p>No expenses found.</p> :
-        filteredExpenses.map((expense) => (
-          <ExpenseItem
-            // key is a necesary unique id for react to render dynamic lists efficiently
-            key={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
-
-
-
+      {expensesContent}
     </Card>
   )
 }
