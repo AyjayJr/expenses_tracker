@@ -7,7 +7,6 @@ function ExpenseForm(props) {
 	const [userTitle, setUserTitle] = useState('');
 	const [userAmount, setUserAmount] = useState('');
 	const [userDate, setUserDate] = useState('');
-	const [showForm, setShowForm] = useState(false);
 
 	// event is a default js argument that has details about the event that occurred
 	// we are interested in the value property which stores the value in the input field
@@ -33,13 +32,8 @@ function ExpenseForm(props) {
 		setUserDate('');
 	};
 
-	const openFormHandler = () => { setShowForm(true); };
-	const closeFormHandler = () => { setShowForm(false); };
-
-	let content = <button onClick={openFormHandler}>Add New Expense</button>
-
-	if (showForm) {
-		content = (
+	return (
+		<div>
 			<form onSubmit={submitHandler}>
 				<div className='new-expense__controls'>
 					<div className='new-expense__control'>
@@ -56,16 +50,10 @@ function ExpenseForm(props) {
 					</div>
 				</div>
 				<div className="new-expense__actions">
-					<button onClick={closeFormHandler}>Cancel</button>
+					<button onClick={props.onCancelForm}>Cancel</button>
 					<button type='submit'>Add Expense</button>
 				</div>
 			</form>
-		);
-	}
-
-	return (
-		<div>
-			{content}
 		</div>
 	)
 }
